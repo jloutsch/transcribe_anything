@@ -23,9 +23,9 @@ venv/
 ENV/
 env/
 
-# Transcripts
+# Transcripts (but keep requirements.txt)
 transcripts/
-*.txt
+transcripts/*.txt
 
 # macOS
 .DS_Store
