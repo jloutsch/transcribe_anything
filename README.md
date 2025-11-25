@@ -14,20 +14,49 @@ Local, privacy-focused audio and video transcription using OpenAI's Whisper mode
 
 ## Quick Start
 
-### Prerequisites
-
-- Python 3.8 or higher
-- FFmpeg (install with `brew install ffmpeg` on Mac)
-
-### Installation
+### Automated Installation (Recommended)
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/transcription-app.git
+git clone https://github.com/jloutsch/transcription-app.git
 cd transcription-app
 
-# Install dependencies
-pip install -r requirements-gui.txt
+# Run the installer
+./install.sh
+```
+
+The installer will:
+- Check for and install Python 3.13 if needed (via Homebrew)
+- Install required system packages (tkinter, ffmpeg)
+- Create a virtual environment
+- Install all Python dependencies
+- Configure the launcher script
+
+After installation, run the app with:
+```bash
+./launch_gui.sh
+```
+
+### Manual Installation
+
+**Prerequisites:**
+- Python 3.13 (recommended) or Python 3.11+
+- Homebrew (for macOS dependencies)
+
+```bash
+# Clone the repository
+git clone https://github.com/jloutsch/transcription-app.git
+cd transcription-app
+
+# Install system dependencies
+brew install python@3.13 python-tk@3.13
+
+# Create virtual environment
+python3.13 -m venv venv
+source venv/bin/activate
+
+# Install Python packages
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -108,30 +137,35 @@ MODEL_SIZE = "medium"  # Options: tiny, base, small, medium, large-v3
 - `medium` - Good accuracy (default, ~5GB RAM)
 - `large-v3` - Best accuracy, slower (~10GB RAM)
 
-## Creating a Mac .app Bundle
+## Creating a Mac .app Bundle (Optional)
 
-To create a standalone Mac application:
+After running `install.sh`, you can create a double-clickable Mac application:
 
-### Using py2app (Creates native .app)
+### Using Platypus (Recommended)
 
-```bash
-pip install py2app
-python setup.py py2app
-```
-
-Your app will be in the `dist/` folder. Drag it to Applications!
-
-### Using Platypus (Easiest option)
-
-1. Download [Platypus](https://sveinbjorn.org/platypus)
+1. Download and install [Platypus](https://sveinbjorn.org/platypus)
 2. Open Platypus
-3. Set Script Type: Python
-4. Set Script Path: Browse to `transcribe_gui.py`
-5. Set App Name: "Audio Transcriber"
-6. Check "Accepts dropped items"
-7. Click "Create App"
+3. Configure:
+   - **Script Type:** Shell
+   - **Script Path:** Browse to `/path/to/transcription-app/launch_gui.sh`
+   - **Interface:** None
+   - **Options:** Check "Runs in background"
+4. Click "Create App"
+5. Save as "Transcribe Anything.app"
 
-See [GUI_INSTRUCTIONS.md](GUI_INSTRUCTIONS.md) for detailed instructions.
+The created .app will work **only on your machine** since it contains absolute paths. For sharing with others, distribute the repository and have them run `install.sh` on their machine.
+
+### Distribution Best Practices
+
+When sharing this app:
+1. Share the GitHub repository link
+2. Users clone the repo and run `./install.sh`
+3. (Optional) Users create their own .app with Platypus using their `launch_gui.sh`
+
+This approach ensures:
+- All dependencies are correctly installed for each system
+- Paths are configured correctly for each machine
+- Model downloads happen on first use (not bundled in repo)
 
 ## Performance Tips
 
