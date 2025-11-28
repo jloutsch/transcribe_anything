@@ -4,3 +4,5 @@ tkinterdnd2
 torch
 torchaudio
 pyannote.audio
+transformers
+scikit-learn
